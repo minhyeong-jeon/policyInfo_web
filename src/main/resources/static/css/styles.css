@@ -11055,7 +11055,7 @@ blockquote {
   text-transform: uppercase;
 }
 #mainNav .navbar-nav > li.nav-item > a.nav-link {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.0625em;
   text-transform: uppercase;
@@ -11121,9 +11121,9 @@ header.masthead {
   position: relative;
   margin-bottom: 3rem;
   padding-top: calc(8rem + 57px);
-  padding-bottom: 8rem;
+  padding-bottom: 4rem;
   background: no-repeat center center;
-  background-color: #6c757d;
+  background-color: #52abfa;
   background-size: cover;
   background-attachment: scroll;
 }
@@ -11134,7 +11134,7 @@ header.masthead:before {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #212529;
+  background-color: #3d73a4;
   opacity: 0.5;
 }
 header.masthead .page-heading,
@@ -11185,13 +11185,13 @@ header.masthead .post-heading .meta a {
 }
 @media (min-width: 992px) {
   header.masthead {
-    padding-top: 12.5rem;
-    padding-bottom: 12.5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 2.5rem;
   }
   header.masthead .page-heading h1, header.masthead .page-heading .h1,
 header.masthead .site-heading h1,
 header.masthead .site-heading .h1 {
-    font-size: 5rem;
+    font-size: 3rem;
   }
   header.masthead .post-heading h1, header.masthead .post-heading .h1 {
     font-size: 3.5rem;
