@@ -1,14 +1,17 @@
 package com.policyInfo.policyInfo;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.ws.Response;
+
 @Controller
 public class HomeController {
 
-    @GetMapping("/main")
+    @GetMapping("/")
     public String main(Model model){
         return "index";
     }
@@ -18,4 +21,5 @@ public class HomeController {
     public String board(Model model){
         return "dashboard";
     }
+
 }

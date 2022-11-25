@@ -14,8 +14,15 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+
+  security:
+    user:
+      name: mhjeon
+      password: 1234
+      roles: USER, ADMIN
 
 devtools:
   livereload:
     enabled: true
+
