@@ -3,11 +3,11 @@ package com.policyInfo.policyInfo.login;
 import com.policyInfo.policyInfo.member.MemberDto;
 import com.policyInfo.policyInfo.member.Role;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,32 +19,33 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long joinUser(MemberDto memberDto) {
+    public String joinUser(MemberDto memberDto) {
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPswd(passwordEncoder.encode(memberDto.getPswd()));
 
-        return memberRepository.save(memberDto.toEntity()).getId();
+        return memberRepository.save(memberDto.toEntity()).getEmail();
     }
 
-    /*public UserDetails loadUserByUsername(String userEmail) throws UsernameNotFoundException {
-        Optional<Member> userEntityWrapper = memberRepository.findByEmail(userEmail);
-        Member userEntity = userEntityWrapper.get();
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Member> memberEntityWrapper = memberRepository.findByEmail(email);
+        Member memberEntity = memberEntityWrapper.get();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if (("admin@example.com").equals(userEmail)) {
+        if (("admin@example.com").equals(email)) {
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         } else {
             authorities.add(new SimpleGrantedAuthority(Role.MEMBER.getValue()));
         }
 
-        return new User(userEntity.getEmail(), userEntity.getPswd(), authorities);
-    }*/
+        return new User(memberEntity.getEmail(), memberEntity.getPswd(), authorities);
+    }
 
 }

@@ -2,10 +2,7 @@ package com.policyInfo.policyInfo.login;
 
 import com.policyInfo.policyInfo.member.FavoriteItem;
 import com.policyInfo.policyInfo.member.Role;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id

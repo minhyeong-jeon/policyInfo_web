@@ -24,7 +24,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @AllArgsConstructor
 public class SecurityConfig{
 
-    private MemberService memberService;
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,14 +44,17 @@ public class SecurityConfig{
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
                 // 페이지 권한 설정
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/myinfo").hasRole("MEMBER")
                 .antMatchers("/**").permitAll()
                 .and() // 로그인 설정
+                .authenticationManager(authenticationManager)
                 .formLogin()
                 .loginPage("/user/login")
+                .usernameParameter("email")
                 .defaultSuccessUrl("/user/login/result")
                 .permitAll()
                 .and() // 로그아웃 설정
@@ -62,9 +68,14 @@ public class SecurityConfig{
         return http.build();
     }
 
-    /*@Bean
+/*    @Bean
+    AuthenticationManager authenticationManager(AuthenticationManagerBuilder builder) throws Exception {
+        return builder.userDetailsService(memberService).passwordEncoder(passwordEncoder()).and().build();
+
+    }*/
+
+    @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-*/
 }
