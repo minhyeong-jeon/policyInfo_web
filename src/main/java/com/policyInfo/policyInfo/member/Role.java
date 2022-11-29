@@ -1,3 +1,4 @@
+/*
 package com.policyInfo.policyInfo.member;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ public enum Role {
 
     private String value;
 }
+*/
 /*
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -28,5 +30,7 @@ public enum Role {
 
     public Role(String rolename) {
         this.rolename = rolename;
-    }*/
+    }*//*
 
+
+*/

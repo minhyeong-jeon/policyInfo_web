@@ -1,3 +1,4 @@
+/*
 package com.policyInfo.policyInfo.member;
 
 import com.policyInfo.policyInfo.login.Member;
@@ -28,7 +29,9 @@ public class MemberDto {
 
     private Role role;
 
-    /* DTO -> Entity */
+    */
+/* DTO -> Entity *//*
+
     public Member toEntity() {
         Member member = Member.builder()
                 .name(name)
@@ -56,4 +59,4 @@ public class MemberDto {
         this.role = role;
 
     }
-}
+}*/

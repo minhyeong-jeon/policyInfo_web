@@ -1,10 +1,13 @@
+/*
 package com.policyInfo.policyInfo.login;
 
 import com.policyInfo.policyInfo.member.MemberDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
@@ -31,11 +34,21 @@ public class MemberController {
     }
 
     // 로그인 페이지
-    @GetMapping("/user/login")
+    */
+/*@GetMapping("/user/login")
     public String dispLogin() {
         return "/login";
-    }
+    }*//*
 
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model,
+                               @RequestParam(value = "error", required = false) String error,
+                               @RequestParam(value = "exception", required = false) String exception) {
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        return "/member";
+    }
 
     // 로그인 결과 페이지
     @GetMapping("/user/login/result")
@@ -43,7 +56,9 @@ public class MemberController {
         return "/loginSuccess";
     }
 
-    /*// 로그아웃 결과 페이지
+    */
+/*//*
+/ 로그아웃 결과 페이지
     @GetMapping("/user/logout/result")
     public String dispLogout() {
         return "/logout";
@@ -65,6 +80,8 @@ public class MemberController {
     @GetMapping("/admin")
     public String dispAdmin() {
         return "/admin";
-    }*/
+    }*//*
+
 
 }
+*/
