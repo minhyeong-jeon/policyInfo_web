@@ -3,16 +3,10 @@ package com.policyInfo.policyInfo.workAPI;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 public class ServList {
 
-    //public List<ServListItem> items;
     public Integer inqNum;
     public String jurMnofNm;          // 단체
     public String jurOrgNm;

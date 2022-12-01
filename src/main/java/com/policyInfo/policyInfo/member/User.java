@@ -1,6 +1,5 @@
 package com.policyInfo.policyInfo.member;
 
-import com.policyInfo.policyInfo.member.FavoriteItem;
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,47 +48,4 @@ public class User {
         favoriteItemList.add(favoriteItem);
     }
 
-    /*@Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;*/
-
-
-
-/*    @Builder
-    public User(Long id, String name, String pswd,String email, String lifeCycle, String area, String lifeType, List<FavoriteItem> favoriteItemList, Role role) {
-        this.id = id;
-        this.name = name;
-        this.pswd = pswd;
-        this.email = email;
-        this.lifeCycle = lifeCycle;
-        this.area = area;
-        this.lifeType = lifeType;
-        this.favoriteItemList = favoriteItemList;
-        this.role = role;
-
-    }*/
-
-/*    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "member_role", joinColumns = {@JoinColumn(name = "MEMBER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
-    private List<Role> roles;*/
-
-
-/*    @Builder
-    public Member(String name, String email, String pswd, String address, MemberRole role) {
-        this.pswd = pswd;
-        this.email = email;
-        this.roles = role;
-    }*/
-
-
-/*    public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
-        Member member = Member.builder()
-                .name(memberFormDto.getName())
-                .email(memberFormDto.getEmail())
-                .password(passwordEncoder.encode(memberFormDto.getPassword()))  //암호화처리
-                .role(MemberRole.USER)
-                .build();
-        return member;
-    }*/
 }

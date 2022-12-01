@@ -25,9 +25,6 @@ public class HomeController {
     @Autowired
     WorkService workService;
 
-   /* @Autowired
-    WorkRepository workRepository;
-*/
     @GetMapping("/user")
     public @ResponseBody String user(Model model) {
         return "login";
@@ -41,8 +38,6 @@ public class HomeController {
         ResponseEntity<String> responseEntity = workService.getAPI(lifeCycle, lifeType);
         WantedList response = workService.parser(responseEntity.getBody());
 
-
-        System.out.println("response = " + response);
         //html에 객체 지정 실시
         List<ServList> tables = new ArrayList<>();
         for(int i=0; i < Integer.valueOf(response.getTotalCount()); i++) { //반복문을 수행하면서 리스트에 데이터 삽입
@@ -58,22 +53,8 @@ public class HomeController {
 
         }
         model.addAttribute("tableList",tables);
-
-
-
         model.addAttribute("lifeCycle", lifeCycle);
         model.addAttribute("lifeType", lifeType);
-
-/*        if(lifeCycle == null && lifeType==null){
-            lifeCycle = "선택안함";
-            lifeType = "선택안함";
-        }*/
-        /*WantedList wantedList = new WantedList();
-        wantedList.setTrgterIndvdlArray(userRepository.findByUsername(principal.getName()).getLifeType());
-        wantedList.setLifeArray(userRepository.findByUsername(principal.getName()).getLifeCycle());
-        workRepository.save(wantedList);*/
-
-        //System.out.println("lifeCycle = " + lifeCycle);
 
         return "main";
     }
