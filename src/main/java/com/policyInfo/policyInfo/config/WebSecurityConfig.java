@@ -1,4 +1,4 @@
-package com.policyInfo.policyInfo;
+package com.policyInfo.policyInfo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,7 +35,7 @@ public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/loginProc")
-                .defaultSuccessUrl("/board")
+                .defaultSuccessUrl("/")
                 .and().build();
     }
     @Bean

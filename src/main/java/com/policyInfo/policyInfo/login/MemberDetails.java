@@ -1,6 +1,6 @@
-package com.policyInfo.policyInfo;
+package com.policyInfo.policyInfo.login;
 
-import com.policyInfo.policyInfo.login.User;
+import com.policyInfo.policyInfo.member.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,12 +1,10 @@
-package com.policyInfo.policyInfo.login;
+package com.policyInfo.policyInfo.member;
 
 import com.policyInfo.policyInfo.member.FavoriteItem;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Getter

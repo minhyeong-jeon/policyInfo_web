@@ -1,15 +1,11 @@
-package com.policyInfo.policyInfo;
+package com.policyInfo.policyInfo.login;
 
-import com.policyInfo.policyInfo.login.User;
-import com.policyInfo.policyInfo.login.UserRepository;
+import com.policyInfo.policyInfo.member.User;
+import com.policyInfo.policyInfo.member.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-
-import java.security.Principal;
 
 @Service
 public class MemberDetailsService implements UserDetailsService {
@@ -24,10 +20,6 @@ public class MemberDetailsService implements UserDetailsService {
             return new MemberDetails(user);
         }
         return null;
-    }
-
-    public String currentUserName(Principal principal) {
-        return principal.getName();
     }
 }
 

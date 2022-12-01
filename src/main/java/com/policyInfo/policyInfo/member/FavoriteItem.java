@@ -1,6 +1,5 @@
 package com.policyInfo.policyInfo.member;
 
-import com.policyInfo.policyInfo.login.User;
 import lombok.*;
 
 import javax.persistence.*;
