@@ -24,4 +24,9 @@ public class ServList {
     public Integer svcfrstRegTs;
     public String trgterIndvdlArray;  // 대상
 
+    public ServList(String servNm, String servDgst) {
+        this.servNm = servNm;
+        this.servDgst = servDgst;
+    }
+
 }

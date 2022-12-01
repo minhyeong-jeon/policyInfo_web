@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class JoinController {
-
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Autowired
+    public JoinController(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
     @Autowired
     UserRepository userRepository;
 
@@ -26,6 +29,8 @@ public class JoinController {
     public String joinProc(User user) {
         String rawPassword = user
                 .getPassword();
+
+        System.out.println("rawPassword = " + rawPassword);
         String encPassword = bCryptPasswordEncoder.encode(rawPassword);
         user.setPassword(encPassword);
         user.setRole("ROLE_USER");

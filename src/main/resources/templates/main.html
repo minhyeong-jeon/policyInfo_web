@@ -112,20 +112,24 @@
 
       </select>
       <!-- Post preview-->
-      <div class="post-preview">
-        <a href="post.html">
-          <h2 class="post-title" th:text="${itemName}">Man must explore, and this is exploration at its greatest</h2>
-          <h3 class="post-subtitle" th:text="${itemCntn}">Problems look mighty small from 150 miles up</h3>
-        </a>
-        <p class="post-meta">
-          Posted by
-          <a href="#!">Start Bootstrap</a>
-          on September 24, 2022
-        </p>
+      <div th:each="list : ${tableList}">
+        <div class="post-preview">
+          <a href="post.html"><br>
+            <b class="post-title" th:text="${list.servNm}">servNm_text</b><br>
+            <small class="post-subtitle" th:text="${list.servDgst}">servDgst_text</small>
+            <hr>
+          </a>
+          <!--<p class="post-meta">
+              Posted by
+              <a href="#!">Start Bootstrap</a>
+              on September 24, 2022
+          </p>-->
+        </div>
       </div>
-      <!-- Divider-->
+
+      <!-- Divider
       <hr class="my-4" />
-      <!-- Post preview-->
+      &lt;!&ndash; Post preview&ndash;&gt;
       <div class="post-preview">
         <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
         <p class="post-meta">
@@ -134,9 +138,9 @@
           on September 18, 2022
         </p>
       </div>
-      <!-- Divider-->
+      &lt;!&ndash; Divider&ndash;&gt;
       <hr class="my-4" />
-      <!-- Post preview-->
+      &lt;!&ndash; Post preview&ndash;&gt;
       <div class="post-preview">
 
         <a href="post.html">
@@ -149,9 +153,9 @@
           on August 24, 2022
         </p>
       </div>
-      <!-- Divider-->
+      &lt;!&ndash; Divider&ndash;&gt;
       <hr class="my-4" />
-      <!-- Post preview-->
+      &lt;!&ndash; Post preview&ndash;&gt;
       <div class="post-preview">
         <a href="post.html">
           <h2 class="post-title">Failure is not an option</h2>
@@ -162,9 +166,8 @@
           <a href="#!">Start Bootstrap</a>
           on July 8, 2022
         </p>
-      </div>
+      </div>-->
       <!-- Divider-->
-      <hr class="my-4" />
       <!-- Pager-->
       <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
     </div>

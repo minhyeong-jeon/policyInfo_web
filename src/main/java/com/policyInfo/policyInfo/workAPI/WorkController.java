@@ -1,3 +1,4 @@
+/*
 package com.policyInfo.policyInfo.workAPI;
 
 import groovy.transform.AutoImplement;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.UnsupportedEncodingException;
 
 
 @Controller
@@ -21,14 +24,15 @@ public class WorkController {
     }
 
     @GetMapping("/covid19")
-    public String getCovid19(Model model){
-        ResponseEntity<String> responseEntity = workService.getAPi();
+    public String getCovid19(Model model) throws UnsupportedEncodingException {
+        ResponseEntity<String> responseEntity = workService.getAPI();
         WantedList response = workService.parser(responseEntity.getBody());
 
-        System.out.println("response" + response);
-        System.out.println("response.totalCount" + response.getTotalCount());
+        //System.out.println("response" + response);
+        //System.out.println("response.totalCount" + response.getTotalCount());
 
-        model.addAttribute("response",response);
+        model.addAttribute("response",response.getServList().get(0));
         return "xmlParsing";
     }
 }
+*/
