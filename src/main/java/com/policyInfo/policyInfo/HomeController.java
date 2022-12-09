@@ -49,68 +49,39 @@ public class HomeController {
         //사용자의 생애주기와 가구유형 가져오기
         String lifeCycle = userRepository.findByUsername(principal.getName()).getLifeCycle();
         String lifeType = userRepository.findByUsername(principal.getName()).getLifeType();
+        List<ServList> servLists = new ArrayList<>();
 
-        if(lifeCycle.equals("선택안함"))
-            lifeCycle=null;
-        if(lifeType.equals("선택안함"))
-            lifeType=null;
         //DB에 저장된 복지 API 가져오기
-        //List<WantedList> wantedList = publicAPIRepository.findResultMessage();
-        //System.out.println("wantedList = " + wantedList);
+        if(lifeCycle.equals("선택안함")){
+            servLists = servAPIRepository.findByTrgterIndvdlArrayContaining(lifeType);
+        }
 
-        //List<ServList> servListList = servAPIRepository.findByLifeArrayContaining(lifeCycle);
-        List<ServList> servListList = servAPIRepository.findByLifeArrayContainingAndTrgterIndvdlArrayContaining(lifeCycle, lifeType);
-        List<ServList> servLists = servAPIRepository.findByTrgterIndvdlArrayContaining(lifeType);
-        //List<ServList> tables = new ArrayList<>();
-        //System.out.println("wantedList.get(0).getTotalCount() = " + wantedList.get(0).getTotalCount());
-        System.out.println("servList = " + servListList);
+        else if(lifeType.equals("선택안함")){
+            servLists = servAPIRepository.findByLifeArrayContaining(lifeCycle);
+        }
+        else if(lifeType.equals("선택안합") && lifeCycle.equals("선택안함")){
+            servLists = servAPIRepository.findAll();
+        }
+        else{
+            servLists = servAPIRepository.findByLifeArrayContainingAndTrgterIndvdlArrayContaining(lifeCycle,lifeType);
+        }
 
-        /*for(int i = 0; i < servListList.size(); i++){
-            System.out.println("servListList = " + servListList.get(i));
-            if(servListList.get(i).getLifeArray().contains(lifeCycle)||servListList.get(i).getTrgterIndvdlArray().contains(lifeType)){
-                servNm = servListList.get(i).getServNm();
-                servDgst = servListList.get(i).getServDgst();
+        List<ServList> tables = new ArrayList<>();
+        for(int i = 0; i < servLists.size(); i++){
 
-                ServList servList = new ServList(servNm, servDgst);
-                tables.add(servList);
+            servNm = servLists.get(i).getServNm();
+            servDgst = servLists.get(i).getServDgst();
 
-                model.addAttribute("itemName",servNm);
-                model.addAttribute("itemName",servDgst);f
-
-
-
-            }
-        }*/
-        /*model.addAttribute("tableList",tables);
-        model.addAttribute("lifeCycle", lifeCycle);
-        model.addAttribute("lifeType", lifeType);*/
-
-        //ResponseEntity<String> responseEntity = publicAPIParser.getAPI();
-        //WantedList response = publicAPIParser.parser(responseEntity.getBody());
-
-        //System.out.println("wantedList = " + wantedList.getServList());
-        //html에 객체 지정 실시
-        /*List<ServList> tables = new ArrayList<>();
-        for(int i=0; i < Integer.valueOf(wantedList.getTotalCount()); i++) { //반복문을 수행하면서 리스트에 데이터 삽입
-            String servNm = wantedList.getServList().get(i).getServNm();
-            String servDgst = wantedList.getServList().get(i).getServDgst();
-
-            System.out.println("wantedList = " + wantedList.getServList().get(i));
-
-            //객체를 리스트에 삽입
             ServList servList = new ServList(servNm, servDgst);
             tables.add(servList);
 
             model.addAttribute("itemName",servNm);
-            model.addAttribute("itemCntn",servDgst);
+            model.addAttribute("itemName",servDgst);
+        }
 
-        }*/
-
-        /*model.addAttribute("tableList",tables);
+        model.addAttribute("tableList",tables);
         model.addAttribute("lifeCycle", lifeCycle);
-        model.addAttribute("lifeType", lifeType);*/
-
-        //System.out.println("id = " + id);
+        model.addAttribute("lifeType", lifeType);
 
         return "main";
     }
