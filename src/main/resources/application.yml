@@ -22,8 +22,3 @@ spring:
 devtools:
   livereload:
     enabled: true
-
-openapi:
-  service:
-    url: https://www.bokjiro.go.kr/ssis-tbu/NationalWelfareInformations/NationalWelfarelist.do
-    key: CBcCuS23DUJC6B2TfVraEjO8ReHrJF%2FoZfCEn3NxEiKhWB2Of81t%2B9At922MLrK6%2FwDNrVgIE35dMSFpUVKHXA%3D%3D&callTp=L&srchKeyCode=001&pageNo=1&numOfRows=10&lifeArray=007

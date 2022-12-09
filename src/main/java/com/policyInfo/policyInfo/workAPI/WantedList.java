@@ -1,18 +1,31 @@
 package com.policyInfo.policyInfo.workAPI;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 @Data
 @NoArgsConstructor
+@Getter @Setter
 public class WantedList {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "publicMainId")
+    public Long id;
     public String totalCount = "";
     public String resultCode = "";
     public String resultMessage = "";
     public String pageNo            = "1";      //기본값 1,최대 1000
     public String numOfRows         = "100";    //출력건수
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "publicMainId")
     public List<ServList> servList;
 
 }

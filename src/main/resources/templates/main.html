@@ -118,9 +118,13 @@
       <div th:each="list : ${tableList}">
         <div class="post-preview">
           <a href="post.html"><br>
-            <b class="post-title" th:text="${list.servNm}">servNm_text</b><br>
+            <b class="post-title" th:text="${list.servNm}">servNm_text</b>
+            <button type="submit" name="add_favorite" id="add_favorite"><img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함"></button>
+            <br>
             <small class="post-subtitle" th:text="${list.servDgst}">servDgst_text</small>
+            <br>
             <hr>
+
           </a>
           <!--<p class="post-meta">
               Posted by

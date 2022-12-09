@@ -11252,3 +11252,14 @@ hr{
    border: solid 1px black;
    width: auto;
 }
+
+.add_favorite{
+    float : right;
+    width : 20px;
+    height : 20px;
+}
+
+#add_favorite {
+    background-color: transparent;
+    border: 0px;
+}

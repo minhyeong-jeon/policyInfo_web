@@ -9,21 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {//extends WebSecurityConfigurerAdapter {
-
-    /* @Override
-     protected void configure(HttpSecurity http) throws Exception {
-         http.csrf().disable();
-         http.authorizeRequests()
-                 .antMatchers("/user/**").authenticated()
-                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                 .anyRequest().permitAll()
-                 .and()
-                 .formLogin()
-                 .loginPage("/login")
-                 .loginProcessingUrl("/loginProc")
-                 .defaultSuccessUrl("/");
-     } */
+public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()    //CSRF 공격에 대한 방어를 해제
