@@ -1,10 +1,226 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Clean Blog - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
-<h4 th:text="${response}"></h4>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+    <div class="container px-4 px-lg-5">
+        <!--<a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>-->
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">검색</a></li>
+                <form action="/user" method="get">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/user">즐겨찾기</a></li>
+                    </ul>
+                </form>
+
+                <form action="/user" method="get">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/user">일정</a></li>
+                    </ul>
+                </form>
+
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">문의</a></li>
+
+                <div th:if="${user != null}">
+                    <form action="/login" method="get">
+                        <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                            <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">로그인</a></li>
+                        </ul>
+                    </form>
+                </div>
+
+                <form action="/join" method="get">
+                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/join">회원가입</a></li>
+                    </ul>
+                </form>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Header-->
+<header class="masthead">
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="site-heading">
+                    <h1>Clean Blog</h1>
+                    <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <select class="select_work" id="lifeCycle" name = "lifeCycle" >
+                <option th:value="${lifeCycle}" th:text="${lifeCycle}"></option>
+                <option value="선택안함">선택안함</option>
+                <option value="영유아">영유아</option>
+                <option value="아동">아동</option>
+                <option value="청소년">청소년</option>
+                <option value="청년">청년</option>
+                <option value="중장년">중장년</option>
+                <option value="노년">노년</option>
+                <option value="임신·출산">임신·출산</option>
+            </select>
+
+
+
+            <select class="select_work" id="lifeType" name = "lifeType">
+                <option th:value="${lifeType}" th:text="${lifeType}"></option>
+                <option value="선택안함">선택안함</option>
+                <option value="다문화·탈북민">다문화·탈북민</option>
+                <option value="다자녀">다자녀</option>
+                <option value="보훈대상자">보훈대상자</option>
+                <option value="장애인">장애인</option>
+                <option value="저소득">저소득</option>
+                <option value="한부모·조손">한부모·조손</option>
+            </select>
+
+
+            <select  class="select_work" name = "desireArray">
+                <option value="선택안함">선택안함</option>
+                <option value="일자리">일자리</option>
+                <option value="주거">주거</option>
+                <option value="신체건강 및 보건의료">신체건강 및 보건의료</option>
+                <option value="정신건강 및 심리정서">정신건강 및 심리정서</option>
+                <option value="보호 및 돌봄·요양">보호 및 돌봄·요양</option>
+                <option value="보육 및 교육">보육 및 교육</option>
+                <option value="문화 및 여가">문화 및 여가</option>
+                <option value="안전 및 권익보장">안전 및 권익보장</option>
+
+            </select>
+
+            <input type="search" class="keyword" name="keyword" id="keyword" placeholder="검색어">
+            <button class="nav-item">검색</button>
+            <!-- Post preview-->
+            <div th:each="list : ${response}">
+                <div class="post-preview">
+                    <a href="post.html"><br>
+                        <b class="post-title" th:text="${list.servNm}">servNm_text</b>
+                        <button type="submit" name="add_favorite" id="add_favorite"><img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함"></button>
+                        <br>
+                        <small class="post-subtitle" th:text="${list.servDgst}">servDgst_text</small>
+                        <br>
+                        <hr>
+
+                    </a>
+                    <!--<p class="post-meta">
+                        Posted by
+                        <a href="#!">Start Bootstrap</a>
+                        on September 24, 2022
+                    </p>-->
+                </div>
+            </div>
+
+            <!-- Divider
+            <hr class="my-4" />
+            &lt;!&ndash; Post preview&ndash;&gt;
+            <div class="post-preview">
+              <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
+              <p class="post-meta">
+                Posted by
+                <a href="#!">Start Bootstrap</a>
+                on September 18, 2022
+              </p>
+            </div>
+            &lt;!&ndash; Divider&ndash;&gt;
+            <hr class="my-4" />
+            &lt;!&ndash; Post preview&ndash;&gt;
+            <div class="post-preview">
+
+              <a href="post.html">
+                <h2 class="post-title">Science has not yet mastered prophecy</h2>
+                <h3 class="post-subtitle">We predict too much for the next year and yet far too little for the next ten.</h3>
+              </a>
+              <p class="post-meta">
+                Posted by
+                <a href="#!">Start Bootstrap</a>
+                on August 24, 2022
+              </p>
+            </div>
+            &lt;!&ndash; Divider&ndash;&gt;
+            <hr class="my-4" />
+            &lt;!&ndash; Post preview&ndash;&gt;
+            <div class="post-preview">
+              <a href="post.html">
+                <h2 class="post-title">Failure is not an option</h2>
+                <h3 class="post-subtitle">Many say exploration is part of our destiny, but it’s actually our duty to future generations.</h3>
+              </a>
+              <p class="post-meta">
+                Posted by
+                <a href="#!">Start Bootstrap</a>
+                on July 8, 2022
+              </p>
+            </div>-->
+            <!-- Divider-->
+            <!-- Pager-->
+            <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<footer class="border-top">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul class="list-inline text-center">
+                    <li class="list-inline-item">
+                        <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2022</div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
 </body>
 </html>

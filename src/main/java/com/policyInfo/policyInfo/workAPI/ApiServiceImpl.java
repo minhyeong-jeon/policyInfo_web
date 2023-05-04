@@ -4,10 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.policyInfo.policyInfo.member.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NonNull;
 import org.springframework.http.*;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,7 +14,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 
 @Service
-public class PublicAPIParser {
+public class ApiServiceImpl implements ApiService {
 
 
     public ResponseEntity<String> getAPI() throws UnsupportedEncodingException {
@@ -91,7 +89,7 @@ public class PublicAPIParser {
             urlBuilder.append("&" + URLEncoder.encode("desireArray","UTF-8") + "=" + URLEncoder.encode(desireArray, "UTF-8")); *//*사업목적*/
 
 
-        System.out.println("urlBuilder = " + urlBuilder);
+        System.out.println("urlBuilder4 = " + urlBuilder);
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -100,6 +98,7 @@ public class PublicAPIParser {
         HttpEntity<HttpHeaders> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(URI.create(String.valueOf(urlBuilder)), HttpMethod.GET, entity, String.class);
+
 
         return response;
     }
@@ -117,7 +116,53 @@ public class PublicAPIParser {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        //System.out.println("response = " + response);
+
         return response;
     }
+
+    public ResponseEntity<String> getApiDetail(@NonNull WantedDetail wantedDetail) throws UnsupportedEncodingException {
+
+        StringBuilder urlDetailBuilder = new StringBuilder("https://www.bokjiro.go.kr/ssis-tbu/NationalWelfareInformations/NationalWelfaredetailed.do"); /*URL*/
+        urlDetailBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=%2BWnjcadNxjH3FFyaHjifaa6i%2Fi3l9YuKKNF1N1NHsyUESdHZm8EY1NYJv690quMUhZ7NQXKfyW4jQW%2FhuiF37A%3D%3D"); /*Service Key*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("callTp","UTF-8") + "=" + URLEncoder.encode(wantedDetail.callTp, "UTF-8")); /*호출할 페이지 타입을 반드시 설정합니다.(L: 목록, D:상세)*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("servId","UTF-8") + "=" + URLEncoder.encode(wantedDetail.servID, "UTF-8")); /*서비스아이디*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("SG_APIM","UTF-8") + "=2ug8Dm9qNBfD32JLZGPN64f3EoTlkpD8kSOHWfXpyrY");
+
+
+
+        System.out.println("urlDetailBuilder = " + urlDetailBuilder);
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<HttpHeaders> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(URI.create(String.valueOf(urlDetailBuilder)), HttpMethod.GET, entity, String.class);
+
+        System.out.println("urlDetailBuilder = " + response);
+        return response;
+    }
+
+/*    public WantedList detailParser(String xml) {
+        //ObjectMapper xmlMapper = new XmlMapper();
+        JacksonXmlModule module = new JacksonXmlModule();
+        module.setDefaultUseWrapper(false);
+        XmlMapper xmlMapper = new XmlMapper(module);
+        WantedList response = null;
+        try {
+            response = xmlMapper.readValue(xml, WantedList.class);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("response = " + response);
+
+        return response;
+    }*/
 
 }

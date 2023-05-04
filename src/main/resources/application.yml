@@ -22,3 +22,7 @@ spring:
 devtools:
   livereload:
     enabled: true
+
+
+server:
+  port: 8081
