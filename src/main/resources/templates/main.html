@@ -98,13 +98,13 @@
 
 
         <select class="select_work" id="lifeType" name = "lifeType">
-          <option value="선택안함" th:selected="${lifeCycle} == '선택안함'">선택안함</option>
-          <option value="다문화·탈북민" th:selected="${lifeCycle} == '다문화·탈북민'">다문화·탈북민</option>
-          <option value="다자녀" th:selected="${lifeCycle} == '다자녀'">다자녀</option>
-          <option value="보훈대상자" th:selected="${lifeCycle} == '보훈대상자'">보훈대상자</option>
-          <option value="장애인" th:selected="${lifeCycle} == '장애인'">장애인</option>
-          <option value="저소득" th:selected="${lifeCycle} == '저소득'">저소득</option>
-          <option value="한부모·조손" th:selected="${lifeCycle} == '한부모·조손'">한부모·조손</option>
+          <option value="선택안함" th:selected="${lifeType} == '선택안함'">선택안함</option>
+          <option value="다문화·탈북민" th:selected="${lifeType} == '다문화·탈북민'">다문화·탈북민</option>
+          <option value="다자녀" th:selected="${lifeType} == '다자녀'">다자녀</option>
+          <option value="보훈대상자" th:selected="${lifeType} == '보훈대상자'">보훈대상자</option>
+          <option value="장애인" th:selected="${lifeType} == '장애인'">장애인</option>
+          <option value="저소득" th:selected="${lifeType} == '저소득'">저소득</option>
+          <option value="한부모·조손" th:selected="${lifeType} == '한부모·조손'">한부모·조손</option>
         </select>
 
 
@@ -126,15 +126,29 @@
       <!-- Post preview-->
       <div th:each="list : ${tableList}">
         <div class="post-preview">
-          <a href="/detail"><br>
-            <b class="post-title" th:text="${list.servNm}">servNm_text</b>
-            <button type="submit" name="add_favorite" id="add_favorite"><img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함"></button>
-            <br>
+          <br><div class="row">
+            <div class="col-md-10">
+              <a th:href="@{/main2/{servId}(servId=${list.servId})}">
+                <b class="post-title" th:text="${list.servNm}">servNm_text</b>
+              </a>
+            </div>
+            <div class="col-md-1">
+              <form th:action="@{/addFavorite/{servId}(servId=${list.servId})}" method="post">
+                <button type="submit" name="add_favorite" id="add_favorite"><img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함"></button>
+                <input type="hidden" th:name="servNm" id="servNm" th:value="${list.servNm}" />
+                <input type="hidden" th:name="servDgst" id="servDgst" th:value="${list.servDgst}" />
+              </form>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11">
             <small class="post-subtitle" th:text="${list.servDgst}">servDgst_text</small>
-            <br>
             <hr>
+            </div>
+          </div>
 
-          </a>
+
+
           <!--<p class="post-meta">
               Posted by
               <a href="#!">Start Bootstrap</a>

@@ -6,25 +6,24 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Data
 public class FavoriteItem {
+
+    //유저id, 즐겨찾기 id, 서비스명, 서비스내용, 서비스id
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "favoriteId")
     private Long id;
 
-    @Column(name = "itemName")
-    private String itemName;
+    @Column(name = "servNm")
+    private String servNm;
 
-    @Column(name = "itemCntn")
-    private String itemCntn;
-
-    @Column(name = "closeDt")
-    private String closeDt;
+    @Column(name = "servDgst")
+    private String servDgst;
 
     @Column(name = "servId")
     private String servId;

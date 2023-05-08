@@ -6,13 +6,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import javax.servlet.http.HttpSession;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -26,6 +27,7 @@ public class WebSecurityConfig {
                     .loginPage("/login")
                     .loginProcessingUrl("/loginProc")
                     .defaultSuccessUrl("/")
+                    //.failureHandler(customFailureHandler())
                 .and()
                     .logout() // 로그아웃 기능 작동함
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 시 URL 재정의
@@ -44,4 +46,9 @@ public class WebSecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /*@Bean
+    public AuthenticationFailureHandler customFailureHandler() {
+        return new CustomAuthFailureHandler();
+    }*/
 }

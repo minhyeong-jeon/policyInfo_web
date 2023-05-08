@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,12 @@ public class LoginController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        System.out.println("auth : "+auth);
+
+
+        /* 에러와 예외를 모델에 담아 view resolve */
+        /*model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+        System.out.println("auth.model : "+model);*/
         return "redirect:/";
     }
 }
