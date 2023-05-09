@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.policyInfo.policyInfo.member.UserRepository;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetail;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetailList;
 import com.policyInfo.policyInfo.workAPI.domain.WantedList;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,15 +21,20 @@ import java.net.URLEncoder;
 @Service
 public class ApiServiceImpl implements ApiService {
 
+    @Autowired
+    ServAPIRepository servAPIRepository;
 
-    public ResponseEntity<String> getAPI(String lifeCycle,String lifeType) throws UnsupportedEncodingException {
+    @Autowired
+    UserRepository userRepository;
+
+    public ResponseEntity<String> getAPI() throws UnsupportedEncodingException {
         //String url = OPENAPI_URL + "?serviceKey=" + OPENAPI_KEY;
         String desireArray = null;
 
         //String lifeCycle = "청소년";
         //String lifeType = "저소득";
         //001영유아 002아동 003청소년 004청년 005중장년 006노년 007임신·출산
-        if(lifeCycle.equals("영유아")){
+/*        if(lifeCycle.equals("영유아")){
             lifeCycle ="001";
         }
         else if(lifeCycle.equals("아동")) {
@@ -73,21 +80,21 @@ public class ApiServiceImpl implements ApiService {
         }
         else if(lifeType.equals("선택안함")) {
             lifeType = "";
-        }
+        }*/
 
         //System.out.println("lifeCycle = " + lifeCycle);
         //System.out.println("lifeType = " + lifeType);
         StringBuilder urlBuilder = new StringBuilder("https://www.bokjiro.go.kr/ssis-tbu/NationalWelfareInformations/NationalWelfarelist.do"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=CBcCuS23DUJC6B2TfVraEjO8ReHrJF%2FoZfCEn3NxEiKhWB2Of81t%2B9At922MLrK6%2FwDNrVgIE35dMSFpUVKHXA%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("callTp","UTF-8") + "=" + URLEncoder.encode("L", "UTF-8")); /*호출할 페이지 타입을 반드시 설정합니다.(L: 목록, D:상세)*/
-        urlBuilder.append("&" + URLEncoder.encode("srchKeyCode","UTF-8") + "=" + URLEncoder.encode("001", "UTF-8")); /*001 제목 002 내용 003 제목+내용*/
-        urlBuilder.append("&" + URLEncoder.encode("SG_APIM","UTF-8") + "=" + URLEncoder.encode("2ug8Dm9qNBfD32JLZGPN64f3EoTlkpD8kSOHWfXpyrY", "UTF-8")); /*001 제목 002 내용 003 제목+내용*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("400", "UTF-8")); /*출력건수, 기본값 10, 최대 500 까지 가능합니다.*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=CBcCuS23DUJC6B2TfVraEjO8ReHrJF%2FoZfCEn3NxEiKhWB2Of81t%2B9At922MLrK6%2FwDNrVgIE35dMSFpUVKHXA%3D%3D"); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("callTp", "UTF-8") + "=" + URLEncoder.encode("L", "UTF-8")); /*호출할 페이지 타입을 반드시 설정합니다.(L: 목록, D:상세)*/
+        urlBuilder.append("&" + URLEncoder.encode("srchKeyCode", "UTF-8") + "=" + URLEncoder.encode("001", "UTF-8")); /*001 제목 002 내용 003 제목+내용*/
+        urlBuilder.append("&" + URLEncoder.encode("SG_APIM", "UTF-8") + "=" + URLEncoder.encode("2ug8Dm9qNBfD32JLZGPN64f3EoTlkpD8kSOHWfXpyrY", "UTF-8")); /*001 제목 002 내용 003 제목+내용*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("400", "UTF-8")); /*출력건수, 기본값 10, 최대 500 까지 가능합니다.*/
 
-        if(!lifeCycle.isEmpty())
-            urlBuilder.append("&" + URLEncoder.encode("lifeArray","UTF-8") + "=" + URLEncoder.encode(lifeCycle, "UTF-8")); /*생애주기*/
+/*        if(!lifeCycle.isEmpty())
+            urlBuilder.append("&" + URLEncoder.encode("lifeArray","UTF-8") + "=" + URLEncoder.encode(lifeCycle, "UTF-8")); *//*생애주기*//*
         if(!lifeType.isEmpty())
-            urlBuilder.append("&" + URLEncoder.encode("trgterIndvdlArray","UTF-8") + "=" + URLEncoder.encode(lifeType, "UTF-8")); /*대상자*/
+            urlBuilder.append("&" + URLEncoder.encode("trgterIndvdlArray","UTF-8") + "=" + URLEncoder.encode(lifeType, "UTF-8")); *//*대상자*/
 /*        if(!desireArray.isEmpty())
             urlBuilder.append("&" + URLEncoder.encode("desireArray","UTF-8") + "=" + URLEncoder.encode(desireArray, "UTF-8")); *//*사업목적*/
 
@@ -128,10 +135,10 @@ public class ApiServiceImpl implements ApiService {
     public ResponseEntity<String> getApiDetail(@NonNull WantedDetail wantedDetail, String servId) throws UnsupportedEncodingException {
 
         StringBuilder urlDetailBuilder = new StringBuilder("https://www.bokjiro.go.kr/ssis-tbu/NationalWelfareInformations/NationalWelfaredetailed.do"); /*URL*/
-        urlDetailBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=%2BWnjcadNxjH3FFyaHjifaa6i%2Fi3l9YuKKNF1N1NHsyUESdHZm8EY1NYJv690quMUhZ7NQXKfyW4jQW%2FhuiF37A%3D%3D"); /*Service Key*/
-        urlDetailBuilder.append("&" + URLEncoder.encode("callTp","UTF-8") + "=" + URLEncoder.encode(wantedDetail.callTp, "UTF-8")); /*호출할 페이지 타입을 반드시 설정합니다.(L: 목록, D:상세)*/
-        urlDetailBuilder.append("&" + URLEncoder.encode("servId","UTF-8") + "=" + servId); /*서비스아이디*/
-        urlDetailBuilder.append("&" + URLEncoder.encode("SG_APIM","UTF-8") + "=2ug8Dm9qNBfD32JLZGPN64f3EoTlkpD8kSOHWfXpyrY");
+        urlDetailBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=%2BWnjcadNxjH3FFyaHjifaa6i%2Fi3l9YuKKNF1N1NHsyUESdHZm8EY1NYJv690quMUhZ7NQXKfyW4jQW%2FhuiF37A%3D%3D"); /*Service Key*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("callTp", "UTF-8") + "=" + URLEncoder.encode(wantedDetail.callTp, "UTF-8")); /*호출할 페이지 타입을 반드시 설정합니다.(L: 목록, D:상세)*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("servId", "UTF-8") + "=" + servId); /*서비스아이디*/
+        urlDetailBuilder.append("&" + URLEncoder.encode("SG_APIM", "UTF-8") + "=2ug8Dm9qNBfD32JLZGPN64f3EoTlkpD8kSOHWfXpyrY");
 
         System.out.println("urlDetailBuilder = " + urlDetailBuilder);
 
@@ -162,5 +169,4 @@ public class ApiServiceImpl implements ApiService {
 
         return response;
     }
-
 }

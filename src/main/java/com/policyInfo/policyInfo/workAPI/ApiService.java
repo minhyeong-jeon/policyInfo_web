@@ -10,11 +10,12 @@ import java.io.UnsupportedEncodingException;
 
 public interface ApiService {
 
-    ResponseEntity<String> getAPI(String lifeCycle,String lifeType) throws UnsupportedEncodingException;
+    ResponseEntity<String> getAPI() throws UnsupportedEncodingException;
 
     WantedList parser(String xml);
 
     ResponseEntity<String> getApiDetail(@NonNull WantedDetail wantedDetail, String servId) throws UnsupportedEncodingException;
 
     WantedDetailList detailParser(String xml);
+
 }
