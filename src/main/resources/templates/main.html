@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<!--<head>
   <th:block th:replace="/fragments/header :: headerFragment"></th:block>
 </head>
-<body>
+<body>-->
 <!-- Main Content-->
+<div layout:fragment="content">
 <div class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
 
@@ -66,7 +69,19 @@
             </div>
             <div class="col-md-1">
               <form th:action="@{/addFavorite/{servId}(servId=${list.servId})}" method="post">
-                <button type="submit" name="add_favorite" id="add_favorite"><img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함"></button>
+
+                <button type="submit" name="add_favorite" id="add_favorite">
+<!--
+                  <img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+-->
+                  <div th:if="${user != null} and ${fvrtServId != null}"  >
+                    <img th:if="${#strings.equals(fvrtServId.servId,list.servId)}" class="add_favorite" src="../assets/img/favorite_fill.png" alt="즐겨찾기 추가">
+                    <img th:unless="${#strings.equals(fvrtServId.servId,list.servId)}" class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+                  </div>
+                  <div th:if="${user == null}or ${fvrtServId == null}">
+                    <img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+                  </div>
+                </button>
                 <input type="hidden" th:name="servNm" id="servNm" th:value="${list.servNm}" />
                 <input type="hidden" th:name="servDgst" id="servDgst" th:value="${list.servDgst}" />
               </form>
@@ -134,6 +149,8 @@
     </div>
   </div>
 </div>
+</div>
+    <!--
 <th:block th:replace="/fragments/footer :: footerFragment"></th:block>
 </body>
-</html>
+</html>-->

@@ -1,5 +1,6 @@
 package com.policyInfo.policyInfo.member;
 
+import com.policyInfo.policyInfo.workAPI.domain.ServList;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Data
+@Builder
 public class FavoriteItem {
 
     //유저id, 즐겨찾기 id, 서비스명, 서비스내용, 서비스id
@@ -29,8 +31,8 @@ public class FavoriteItem {
     private String servId;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "username")
+    private Member user;
 
 }
 

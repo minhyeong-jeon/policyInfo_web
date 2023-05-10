@@ -1,13 +1,13 @@
 package com.policyInfo.policyInfo.config;
 
-import com.policyInfo.policyInfo.member.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import javax.servlet.ServletException;
@@ -15,30 +15,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
-public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
+public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
+    private ObjectMapper objectMapper = new ObjectMapper();
     /*
      * HttpServletRequest : request 정보
      * HttpServletResponse : Response에 대해 설정할 수 있는 변수
      * AuthenticationException : 로그인 실패 시 예외에 대한 정보
      */
-
-    @Autowired
-    private User user;
-
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
 
         String errorMessage;
-/*        String ID = request.getParameter("username");
-        String PW = request.getParameter("password");
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String password = user.checkAccount(ID);
-
-        if()*/
 
         if(exception instanceof BadCredentialsException) {
             errorMessage = "아이디 또는 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
@@ -53,6 +46,7 @@ public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHand
         }
 
         errorMessage = URLEncoder.encode(errorMessage, "UTF-8"); /* 한글 인코딩 깨진 문제 방지 */
+
         setDefaultFailureUrl("/login?error=true&exception="+errorMessage);
         super.onAuthenticationFailure(request, response, exception);
     }

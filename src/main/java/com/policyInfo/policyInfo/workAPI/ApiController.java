@@ -1,9 +1,8 @@
 package com.policyInfo.policyInfo.workAPI;
 
-import com.policyInfo.policyInfo.member.Favorite;
-import com.policyInfo.policyInfo.member.FavoriteItem;
-import com.policyInfo.policyInfo.member.UserRepository;
+import com.policyInfo.policyInfo.member.*;
 import com.policyInfo.policyInfo.workAPI.domain.*;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,12 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.persistence.EntityManager;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class ApiController {
 
     @Autowired
@@ -42,14 +43,14 @@ public class ApiController {
         String lifeCycle, lifeType;
         List<ServList> servLists = new ArrayList<>();
 
-        ResponseEntity<String> responseEntity = apiServiceImpl.getAPI();
-        WantedList response = apiServiceImpl.parser(responseEntity.getBody());
+        //ResponseEntity<String> responseEntity = apiServiceImpl.getAPI();
+        //WantedList response = apiServiceImpl.parser(responseEntity.getBody());
 
         if(principal != null) {
 
             //사용자의 생애주기와 가구유형 가져오기
-            lifeCycle = userRepository.findByUsername(principal.getName()).getLifeCycle();
-            lifeType = userRepository.findByUsername(principal.getName()).getLifeType();
+            lifeCycle = userRepository.findByEmail(principal.getName()).getLifeCycle();
+            lifeType = userRepository.findByEmail(principal.getName()).getLifeType();
 
             model.addAttribute("user", principal);
 
@@ -67,11 +68,29 @@ public class ApiController {
             else{
                 servLists = servAPIRepository.findByLifeArrayContainingAndTrgterIndvdlArrayContaining(lifeCycle,lifeType);
             }
+
+            /*List<FavoriteItem> favoriteItemList = favoriteRepository.findByUsername(principal.getName());
+            List<String> servIdList = new ArrayList<>();
+
+            System.out.println("favoriteItemList : "+favoriteItemList);
+*/
+/*            String fvrtServId;
+            if(favoriteItemList != null){
+                for (int i = 0; i < favoriteItemList.size(); i++) {
+                    fvrtServId = favoriteItemList.get(i).getServId();
+                    servIdList.add(fvrtServId);
+                    System.out.println("fvrtServId : "+fvrtServId);
+                }
+                model.addAttribute("fvrtServId", servIdList);
+
+            }*/
+
+
         }
         else {
             lifeCycle = "선택안함";
             lifeType = "선택안함";
-            servLists = response.getServList();
+            servLists = servAPIRepository.findAll();
         }
 
         List<ServList> tables = new ArrayList<>();
@@ -124,14 +143,23 @@ public class ApiController {
 
         return "detail";
     }
+    private final EntityManager em;
 
     @PostMapping("/addFavorite/{servId}")
-    public String addFavorite(Favorite favorite) {
-        FavoriteItem favoriteItem = new FavoriteItem();
+    public String addFavorite(Favorite favorite, Principal principal, FvrtDto fvrtDto) {
 
-        favoriteItem.setServId(favorite.getServId());
-        favoriteItem.setServDgst(favorite.getServDgst());
-        favoriteItem.setServNm(favorite.getServNm());
+        System.out.println("principal.getName() : "+principal.getName());
+
+        Member user = userRepository.findByEmail(principal.getName());
+
+        System.out.println("user: "+user);
+
+        fvrtDto.setUser(user);
+        fvrtDto.setServId(favorite.getServId());
+        fvrtDto.setServDgst(favorite.getServDgst());
+        fvrtDto.setServNm(favorite.getServNm());
+
+        FavoriteItem favoriteItem = fvrtDto.toEntity();
 
         favoriteRepository.save(favoriteItem);
 
