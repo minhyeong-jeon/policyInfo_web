@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,13 +18,12 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-@Table(name = "User")
-public class Member{
+public class Member implements Serializable {
 
-/*회원정보를 저장하는 USER Entity*/
+    /*회원정보를 저장하는 USER Entity*/
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId")
     private Long id;
 
@@ -39,11 +39,6 @@ public class Member{
     @Column(name = "lifeCycle")
     private String lifeCycle;
 
-
-/*@Column(name = "area")
-    private String area;*/
-
-
     @Column(name = "lifeType")
     private String lifeType;
 
@@ -51,22 +46,13 @@ public class Member{
     @Enumerated(EnumType.STRING)
     private MemberRole role; //ROLE_USER, ROLE_ADMIN
 
-
-    //private String roles;
-
-   /* public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
-    }*/
     //cascade = CascadeType.ALL, orphanRemoval = true : 회원을 저장할 경우에 favoriteItemList에 엔티티가 담겨있으면 자동으로 insert쿼리가 나가게 설정한 것
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FavoriteItem> favoriteItemList = new ArrayList<>();
 
     //연관관계 편의 메소드
     public void addFavoriteItem(FavoriteItem favoriteItem) {
-        favoriteItem.setUser(favoriteItem.getUser());
+        favoriteItem.setMember(favoriteItem.getMember());
         favoriteItemList.add(favoriteItem);
     }
 
@@ -91,44 +77,5 @@ public class Member{
                 .build();
         return member;
     }
-
-
-    /*@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        System.out.println("password22222 : "+password);
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        System.out.println("email22222 : "+email);
-
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }*/
 }
 

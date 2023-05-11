@@ -148,11 +148,11 @@ public class ApiController {
 
         System.out.println("principal.getName() : "+principal.getName());
 
-        Member user = userRepository.findByEmail(principal.getName());
+        Member member = userRepository.findByEmail(principal.getName());
 
-        System.out.println("user: "+user);
+        System.out.println("member: "+member);
 
-        fvrtDto.setUser(user);
+        fvrtDto.setMember(member);
         fvrtDto.setServId(favorite.getServId());
         fvrtDto.setServDgst(favorite.getServDgst());
         fvrtDto.setServNm(favorite.getServNm());

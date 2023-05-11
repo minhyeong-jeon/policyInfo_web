@@ -15,7 +15,7 @@ public class FvrtDto {
     private String servNm;
     private String servDgst;
     private String servId;
-    private Member user;
+    private Member member;
 
     /* Dto -> Entity */
     public FavoriteItem toEntity() {
@@ -24,7 +24,7 @@ public class FvrtDto {
         .servNm(servNm)
         .servDgst(servDgst)
         .servId(servId)
-        .user(user)
+        .member(member)
         .build();
 
         return favoriteItem;

@@ -31,8 +31,8 @@ public class FavoriteItem {
     private String servId;
 
     @ManyToOne
-    @JoinColumn(name = "username")
-    private Member user;
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private Member member;
 
 }
 
