@@ -39,20 +39,13 @@ public class WebSecurityConfig {
                 .formLogin()
                     .loginPage("/login")
                     .defaultSuccessUrl("/")
-                    //.loginProcessingUrl("/loginProc")
+                    .loginProcessingUrl("/loginProc")
                     .usernameParameter("email")	// login에 필요한 id 값을 email로 설정 (default는 username)
-                    //.failureHandler(authenticationFailureHandler())
-                    .failureUrl("/login/error")
+                    .failureHandler(authenticationFailureHandler())
                 .and()
                     .logout() // 로그아웃 기능 작동함
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // 로그아웃 시 URL 재정의
                     .logoutSuccessUrl("/") // 로그아웃 성공 후 이동페이지
-                    /*.logoutSuccessHandler((request, response, authentication) -> response.sendRedirect("/"))
-                    .addLogoutHandler((request, response, authentication) -> {
-                        System.out.println("logout success!");
-                        HttpSession session = request.getSession();
-                        session.invalidate();
-                    })*/
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID") // 로그아웃 후 쿠키 삭제
                 .and().build();
@@ -73,18 +66,4 @@ public class WebSecurityConfig {
             AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-    /*@Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(this.userService);
-        provider.setPasswordEncoder(this.bCryptPasswordEncoder());
-        System.out.println("provider : "+provider);
-        return provider;
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        return new CustomAuthenticationProvider(userDetailsService, passwordEncoder());
-    }*/
 }

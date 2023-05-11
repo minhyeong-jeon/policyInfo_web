@@ -17,16 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @GetMapping("/login")
-    public String login(Model model
-                       /* @RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "exception", required = false) String exception*/){
+    public String login(Model model,
+                        @RequestParam(value = "error", required = false) String error,
+                        @RequestParam(value = "exception", required = false) String exception) {
 
-
-        //System.out.println("error: "+error);
-        //System.out.println("exception: "+exception);
-
-        /*model.addAttribute("error", error);
-        model.addAttribute("exception", exception);*/
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
 
         return "login";
     }
@@ -39,12 +35,5 @@ public class LoginController {
         }
 
         return "redirect:/";
-    }
-
-    @GetMapping(value = "/login/error")
-    public String loginError(Model model) {
-        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
-        System.out.println("modelmodelmodel: "+model);
-        return "/login";
     }
 }
