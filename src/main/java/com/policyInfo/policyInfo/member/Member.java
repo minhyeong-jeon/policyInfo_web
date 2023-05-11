@@ -78,11 +78,6 @@ public class Member{
         this.lifeCycle = lifeCycle;
         this.lifeType = lifeType;
         this.role = role;
-
-       System.out.println("usernameusername : "+username);
-       System.out.println("emailemail : "+email);
-       System.out.println("passwordpassword : "+password);
-       System.out.println("rolerole : "+role);
     }
 
     public static Member createMember(UserDto userDto, PasswordEncoder passwordEncoder) {

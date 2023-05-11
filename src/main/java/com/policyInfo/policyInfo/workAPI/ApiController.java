@@ -113,8 +113,6 @@ public class ApiController {
         model.addAttribute("lifeCycle", lifeCycle);
         model.addAttribute("lifeType", lifeType);
 
-
-        System.out.println("model : "+model.getAttribute("user"));
         return "main";
     }
 

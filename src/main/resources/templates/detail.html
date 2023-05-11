@@ -1,25 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <th:block th:replace="/fragments/header :: headerFragment"></th:block>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<div layout:fragment="content">
 <!-- Main Content-->
 <div class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
-    <!-- <select class="select_work" id="lifeCycle" name = "lifeCycle" >
-       &lt;!&ndash;<option th:value="${lifeCycle}" th:text="${lifeCycle}"></option>&ndash;&gt;
-       &lt;!&ndash;th:if="${lifeCycle eq '선택안함' ? 'selected' : ''}"&ndash;&gt;
-       <option value="선택안함" th:selected="${lifeCycle} == '선택안함'">선택안함</option>
-       <option value="영유아" th:selected="${lifeCycle} == '영유아'">영유아</option>
-       <option value="아동" th:selected="${lifeCycle} == '아동'">아동</option>
-       <option value="청소년" th:selected="${lifeCycle} == '청소년'">청소년</option>
-       <option value="청년" th:selected="${lifeCycle} == '청년'">청년</option>
-       <option value="중장년" th:selected="${lifeCycle} == '중장년'">중장년</option>
-       <option value="노년" th:selected="${lifeCycle} == '노년'">노년</option>
-       <option value="임신·출산" th:selected="${lifeCycle} == '임신·출산'">임신·출산</option>
-     </select>-->
-
     <!-- Post preview-->
     <div th:each="list : ${tableList}">
       <div class="post-preview">
@@ -89,7 +75,5 @@
     <!-- Pager-->
   </div>
 </div>
-<th:block th:replace="/fragments/footer :: footerFragment"></th:block>
-
-</body>
+</div>
 </html>

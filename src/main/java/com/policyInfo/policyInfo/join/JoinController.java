@@ -38,8 +38,6 @@ public class JoinController {
 
     @PostMapping(value = "join")
     public String memberForm(@Valid @ModelAttribute("userDto") UserDto userDto, BindingResult bindingResult, Model model) {
-        System.out.println("bindingResult: "+bindingResult);
-        System.out.println("userDto: "+userDto.getEmail());
         if (bindingResult.hasErrors()) {
             return "join";
         }
@@ -47,9 +45,6 @@ public class JoinController {
         try {
             Member member = Member.createMember(userDto, bCryptPasswordEncoder);
             userService.saveMember(member);
-
-            System.out.println("membermember: "+member);
-
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
             System.out.println("e.getMessage(): "+e.getMessage());
