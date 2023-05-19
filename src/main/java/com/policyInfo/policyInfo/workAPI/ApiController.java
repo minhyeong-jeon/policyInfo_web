@@ -69,21 +69,24 @@ public class ApiController {
                 servLists = servAPIRepository.findByLifeArrayContainingAndTrgterIndvdlArrayContaining(lifeCycle,lifeType);
             }
 
-            /*List<FavoriteItem> favoriteItemList = favoriteRepository.findByUsername(principal.getName());
-            List<String> servIdList = new ArrayList<>();
+            //List<FavoriteItem> favoriteItemList = favoriteRepository.findByEmail(principal.getName());
+            List<FavoriteItem> favoriteItemList = favoriteRepository.findByMember_Email(principal.getName());
+            List<Favorite> servIdList = new ArrayList<>();
 
-            System.out.println("favoriteItemList : "+favoriteItemList);
-*/
-/*            String fvrtServId;
+
+            String fvrtServId;
             if(favoriteItemList != null){
                 for (int i = 0; i < favoriteItemList.size(); i++) {
                     fvrtServId = favoriteItemList.get(i).getServId();
-                    servIdList.add(fvrtServId);
+
+
+                    Favorite FavoriteList = new Favorite(fvrtServId);
+                    servIdList.add(FavoriteList);
                     System.out.println("fvrtServId : "+fvrtServId);
                 }
                 model.addAttribute("fvrtServId", servIdList);
-
-            }*/
+                System.out.println("fvrtServId : "+servIdList);
+            }
 
 
         }
@@ -120,7 +123,7 @@ public class ApiController {
     @GetMapping("/main2/{servId}")
     public String detail(Model model,@PathVariable("servId") String servId) throws UnsupportedEncodingException {
 
-        WantedDetail wantedDetail = new WantedDetail();
+        /*WantedDetail wantedDetail = new WantedDetail();
         ResponseEntity<String> responseEntity = apiServiceImpl.getApiDetail(wantedDetail, servId);
         WantedDetailList response = apiServiceImpl.detailParser(responseEntity.getBody());
 
@@ -133,7 +136,10 @@ public class ApiController {
         String alwServCn = response.getAlwServCn();
         String trgterIndvdlArray = response.getTrgterIndvdlArray();
 
-        ServDetailList servDetailList = new ServDetailList(slctCritCn, jurMnofNm, tgtrDtlCn, servNm, alwServCn, trgterIndvdlArray);
+        ServDetailList servDetailList = new ServDetailList(slctCritCn, jurMnofNm, tgtrDtlCn, servNm, alwServCn, trgterIndvdlArray);*/
+        ServDetailList servDetailList = apiServiceImpl.detail(servId);
+        List<ServDetailList> tables = new ArrayList<>();
+
         tables.add(servDetailList);
 
         model.addAttribute("tableList", tables);
@@ -144,7 +150,7 @@ public class ApiController {
     private final EntityManager em;
 
     @PostMapping("/addFavorite/{servId}")
-    public String addFavorite(Favorite favorite, Principal principal, FvrtDto fvrtDto) {
+    public String addFavorite(Favorite favorite, Principal principal, FvrtDto fvrtDto, Model model) {
 
         System.out.println("principal.getName() : "+principal.getName());
 
@@ -159,7 +165,13 @@ public class ApiController {
 
         FavoriteItem favoriteItem = fvrtDto.toEntity();
 
-        favoriteRepository.save(favoriteItem);
+        if(!favoriteRepository.existsByServId(favorite.getServId())){
+            favoriteRepository.save(favoriteItem);
+        }
+        else{
+            System.out.println("fvrtError = " + "이미 추가한 서비스입니다.");
+            model.addAttribute("fvrtError", "이미 추가한 서비스입니다.");
+        }
 
         return "redirect:/";
     }

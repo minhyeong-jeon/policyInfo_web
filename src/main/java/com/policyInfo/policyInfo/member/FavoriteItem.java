@@ -10,7 +10,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 @Builder
 public class FavoriteItem {
 
@@ -31,7 +30,7 @@ public class FavoriteItem {
     private String servId;
 
     @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username")
+    @JoinColumn(name = "email", referencedColumnName = "email")
     private Member member;
 
 }

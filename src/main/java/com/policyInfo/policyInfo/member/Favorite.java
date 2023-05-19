@@ -16,5 +16,9 @@ public class Favorite {
 
     private String servId;
 
+
+    public Favorite(String servId) {
+        this.servId = servId;
+    }
 }
 

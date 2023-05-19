@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.policyInfo.policyInfo.member.UserRepository;
+import com.policyInfo.policyInfo.workAPI.domain.ServDetailList;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetail;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetailList;
 import com.policyInfo.policyInfo.workAPI.domain.WantedList;
@@ -17,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ApiServiceImpl implements ApiService {
@@ -169,4 +172,31 @@ public class ApiServiceImpl implements ApiService {
 
         return response;
     }
+
+    public ServDetailList detail(String servId) {
+        WantedDetail wantedDetail = new WantedDetail();
+        ServDetailList servDetailList = null;
+        try {
+            ResponseEntity<String> responseEntity = getApiDetail(wantedDetail, servId);
+            WantedDetailList response = detailParser(responseEntity.getBody());
+
+            List<ServDetailList> tables = new ArrayList<>();
+
+            String servNm = response.getServNm();
+            String jurMnofNm = response.getJurMnofNm();
+            String tgtrDtlCn = response.getTgtrDtlCn();
+            String slctCritCn = response.getSlctCritCn();
+            String alwServCn = response.getAlwServCn();
+            String trgterIndvdlArray = response.getTrgterIndvdlArray();
+
+            servDetailList = new ServDetailList(slctCritCn, jurMnofNm, tgtrDtlCn, servNm, alwServCn, trgterIndvdlArray);
+        }
+        catch (Exception e){
+
+        }
+
+
+        return servDetailList;
+    }
+
 }

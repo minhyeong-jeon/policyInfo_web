@@ -1,5 +1,6 @@
 package com.policyInfo.policyInfo.workAPI;
 
+import com.policyInfo.policyInfo.workAPI.domain.ServDetailList;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetail;
 import com.policyInfo.policyInfo.workAPI.domain.WantedDetailList;
 import com.policyInfo.policyInfo.workAPI.domain.WantedList;
@@ -17,5 +18,7 @@ public interface ApiService {
     ResponseEntity<String> getApiDetail(@NonNull WantedDetail wantedDetail, String servId) throws UnsupportedEncodingException;
 
     WantedDetailList detailParser(String xml);
+
+    ServDetailList detail(String servId);
 
 }

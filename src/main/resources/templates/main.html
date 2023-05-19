@@ -7,6 +7,21 @@
   <th:block th:replace="/fragments/header :: headerFragment"></th:block>
 </head>
 <body>-->
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+        //즐겨찾기 실패시 에러 메시지 출력
+        $(document).ready(function(){
+            var frvtError = [[${frvtError}]];
+            if(frvtError != null){
+                alert(frvtError);
+            }
+        });
+    </script>
+
+</th:block>
 <!-- Main Content-->
 <div layout:fragment="content">
 <div class="container px-4 px-lg-5">
@@ -74,12 +89,34 @@
                 <button type="submit" name="add_favorite" id="add_favorite">
 <!--
                   <img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
--->
-                  <div th:if="${user != null} and ${fvrtServId != null}"  >
-                    <img th:if="${#strings.equals(fvrtServId.servId,list.servId)}" class="add_favorite" src="../assets/img/favorite_fill.png" alt="즐겨찾기 추가">
-                    <img th:unless="${#strings.equals(fvrtServId.servId,list.servId)}" class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
-                  </div>
-                  <div th:if="${user == null}or ${fvrtServId == null}">
+-->                 <div sec:authorize="isAuthenticated()">
+                        <div th:if="${fvrtServId != null}"  >
+                            <div th:each="fvrtlist : ${fvrtServId}">
+                                <!--<b th:text="${fvrtlist.servId}">${fvrtlist}</b>
+                                <b th:text="${list.servId}">${list}</b>-->
+                                <!--<img th:if="${#strings.equals(fvrtlist.servId,list.servId)}" class="add_favorite" src="../assets/img/favorite_fill.png" alt="즐겨찾기 추가">
+                                <img th:unless="${#strings.equals(fvrtlist.servId,list.servId)}" class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">-->
+                                <!--<img th:src="${#strings.equals(fvrtlist.servId,list.servId)} ? '../assets/img/favorite_fill.png' : '../assets/img/add_favorite_empty.png'}" />-->
+
+                                <!--<span th:text="${#strings.equals(fvrtlist.servId,list.servId)} ? '있다' : '없다.'"></span> -->
+                                <!--<div th:if="${#strings.equals(fvrtlist.servId,list.servId)}">
+                                    <img th:if="${#strings.equals(fvrtlist.servId,list.servId)}" class="add_favorite" src="../assets/img/favorite_fill.png" alt="즐겨찾기 추가">
+                                </div>
+                                <div th:unless="${#strings.equals(fvrtlist.servId,list.servId)}">
+                                    <img th:unless="${#strings.equals(fvrtlist.servId,list.servId)}" class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+                                </div>-->
+                            </div>
+                            <!--<img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">-->
+    <!--
+                                <img th:unless="${#strings.equals(fvrtlist.servId,list.servId)}" class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+    -->                     <!-- <div th:unless="${user != null} and ${fvrtServId != null}" >
+                                <img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
+                            </div>-->
+
+
+                        </div>
+                    </div>
+                  <div th:if="${user == null} or ${fvrtServId == null}">
                     <img class="add_favorite" src="../assets/img/add_favorite_empty.png" alt="즐겨찾기 추가 안함">
                   </div>
                 </button>

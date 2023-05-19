@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
 public class Member implements Serializable {
 
